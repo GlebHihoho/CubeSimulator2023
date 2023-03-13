@@ -45,6 +45,12 @@ public class CubeController : MonoBehaviour
 
     private void Move(Vector3 direction)
     {
+        var isGrounded = CheckIsGrounded();
+        if (!isGrounded)
+        {
+            return;
+        }
+        
         var verticalComponent = Vector3.down;
         var hasWall = HasWallInDirection(direction);
         if (hasWall)
@@ -58,13 +64,16 @@ public class CubeController : MonoBehaviour
         StartCoroutine(Roll(_pivotPoint, _axis));
     }
 
+    private bool CheckIsGrounded()
+    {
+        return Physics.Raycast(transform.position, Vector3.down, 0.55f);
+    }
+
     private bool HasWallInDirection(Vector3 direction)
     {
         return Physics.Raycast(transform.position, direction, 0.55f);
     }
     
-    
-
     private IEnumerator Roll(Vector3 pivot, Vector3 axis)
     {
         _isMoving = true;
@@ -78,6 +87,17 @@ public class CubeController : MonoBehaviour
         
         _rigidbody.isKinematic = false;
         _isMoving = false;
+
+        SnapPositionToInteger();
+    }
+
+    private void SnapPositionToInteger()
+    {
+        var pos = transform.position;
+        pos.x = Mathf.Round(pos.x);
+        pos.z = Mathf.Round(pos.z);
+        
+        transform.position = pos;
     }
 
     private void OnDrawGizmos()
