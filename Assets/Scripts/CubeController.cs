@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
+
 
 public class CubeController : MonoBehaviour
 {
@@ -15,44 +15,18 @@ public class CubeController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    public void Move(Vector3 direction)
     {
-        // Vector3.zero;
-        // Vector3.one;
-        // Vector3.right;
-        // Vector3.forward;
-        // Vector3.up;
-        
         if (_isMoving) return;
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            Move(Vector3.left);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            Move(Vector3.right);
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            Move(Vector3.forward);
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            Move(Vector3.back);
-        }
-    }
-
-    private void Move(Vector3 direction)
-    {
-        var isGrounded = CheckIsGrounded();
+        
+        var isGrounded = BlockChecker.CheckIsGrounded(transform.position);
         if (!isGrounded)
         {
             return;
         }
         
         var verticalComponent = Vector3.down;
-        var hasWall = HasWallInDirection(direction);
+        var hasWall = BlockChecker.HasWallInDirection(transform.position, direction);
         if (hasWall)
         {
             verticalComponent = Vector3.up;
@@ -62,16 +36,6 @@ public class CubeController : MonoBehaviour
         _axis = Vector3.Cross(Vector3.up, direction);
 
         StartCoroutine(Roll(_pivotPoint, _axis));
-    }
-
-    private bool CheckIsGrounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, 0.55f);
-    }
-
-    private bool HasWallInDirection(Vector3 direction)
-    {
-        return Physics.Raycast(transform.position, direction, 0.55f);
     }
     
     private IEnumerator Roll(Vector3 pivot, Vector3 axis)
@@ -88,22 +52,6 @@ public class CubeController : MonoBehaviour
         _rigidbody.isKinematic = false;
         _isMoving = false;
 
-        SnapPositionToInteger();
-    }
-
-    private void SnapPositionToInteger()
-    {
-        var pos = transform.position;
-        pos.x = Mathf.Round(pos.x);
-        pos.z = Mathf.Round(pos.z);
-        
-        transform.position = pos;
-    }
-
-    private void OnDrawGizmos()
-    {
-        // Gizmos.color = Color.red;
-        // Gizmos.DrawSphere(_pivotPoint, 0.2f);
-        // Gizmos.DrawRay(_pivotPoint, _axis);
+        BlockChecker.SnapPositionToInteger(transform);
     }
 }
