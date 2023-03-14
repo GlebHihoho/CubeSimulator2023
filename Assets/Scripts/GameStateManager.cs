@@ -8,7 +8,7 @@ namespace DefaultNamespace
         // Singleton pattern
         public static GameStateManager Instance;
         
-        private bool _isDead = false;
+        // private bool _isDead = false;
         private GameObject _player;
 
         private void Awake()
@@ -30,7 +30,7 @@ namespace DefaultNamespace
         public void Die()
         {
             Destroy(_player);
-            _isDead = true;
+            // _isDead = true;
         }
     }
 }
