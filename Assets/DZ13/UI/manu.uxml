@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/DZ13/UI/startButton.uss?fileID=7433441132597879392&amp;guid=f5b78548fc0607449928fdb55dd33ace&amp;type=3#startButton" />
     <ui:VisualElement style="width: 100%; height: 100%; align-items: center; justify-content: center; margin-bottom: 10px;">
+        <ui:Label display-tooltip-when-elided="true" name="textContainer" style="font-size: 17px; color: rgb(255, 255, 255); height: 700px; width: 500px; justify-content: space-around; align-items: auto; flex-direction: column; flex-wrap: nowrap; white-space: nowrap; -unity-text-align: upper-center;" />
         <ui:VisualElement name="container" style="width: 500px; height: 100px; align-items: center; justify-content: center; flex-direction: column; flex-wrap: nowrap;">
             <ui:ProgressBar title="Loading" low-value="0" name="spinner" style="width: 500px; height: 50px; font-size: 20px; flex-direction: column-reverse;" />
         </ui:VisualElement>
