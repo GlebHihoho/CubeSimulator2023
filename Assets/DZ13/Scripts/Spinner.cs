@@ -24,8 +24,6 @@ public class Spinner : MonoBehaviour
             DOTween.To(() => 0, x => _progressBar.title = $"Loading {x}%", 100, _duration).SetEase(Ease.Linear);
             DOTween.To(() => 0, x => _progressBar.lowValue = x, 100, _duration).SetEase(Ease.Linear);
 
-            _label.text = text;
-
             DOTween.To(() => 0, x => _label.text = text.Substring(0, x), text.Length, _duration).SetEase(Ease.Linear);
         };
 
